@@ -1,8 +1,7 @@
 <p>
-    <a href="/tasks/new">Create new task</a>
+    {{$feature->name}}
 </p>
 
-{{$tasks->links()}}
 <table>
     <tr>
         <th>Name</th>

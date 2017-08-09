@@ -11,12 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::get('/tasks', "TaskController@listAll");
 Route::get('/tasks/new', "TaskController@showCreateForm");
 Route::post('/tasks/new', "TaskController@create");
 Route::get('/tasks/{id}/edit', "TaskController@showEditForm");
 Route::post('/tasks/{id}/edit', "TaskController@edit");
+
+Route::get('/', "FeatureController@index");
+Route::get('/features/{id}/tasks', "FeatureController@showTasks");

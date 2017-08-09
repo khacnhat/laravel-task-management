@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Feature;
 use App\Task;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
     public function showCreateForm(){
-        return view("tasks.create");
+        $features = Feature::all();
+        return view("tasks.create", ["features" => $features]);
     }
 
     public function create(Request $request){
@@ -18,14 +20,18 @@ class TaskController extends Controller
         $task = new Task();
         $task->name = $name;
         $task->description = $description;
+        $task->feature_id = $request->input("feature");
         $task->save();
         $message = "Task was created";
-        return view("tasks.create", ["message" => $message]);
+
+        $features = Feature::all();
+        return view("tasks.create", ["message" => $message, "features" => $features]);
     }
 
 
     public function listAll(){
-        $tasks = Task::paginate(20);//Phan trang
+        $tasks = Task::with("feature")
+            ->paginate(20);//Phan trang
 
         return view("tasks.list", ["tasks" => $tasks]);
     }
